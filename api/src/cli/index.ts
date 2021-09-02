@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import start from '../start';
 import { emitAsyncSafe } from '../emitter';
-import { initializeExtensions, registerExtensionHooks } from '../extensions';
+import { getExtensionManager } from '../extensions';
 import bootstrap from './commands/bootstrap';
 import count from './commands/count';
 import dbInstall from './commands/database/install';
@@ -16,8 +16,9 @@ const pkg = require('../../package.json');
 export async function createCli(): Promise<Command> {
 	const program = new Command();
 
-	await initializeExtensions();
-	registerExtensionHooks();
+	const extensionManager = getExtensionManager();
+
+	await extensionManager.initialize();
 
 	await emitAsyncSafe('cli.init.before', { program });
 
