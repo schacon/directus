@@ -18,7 +18,7 @@ export async function getPackageExtensions(root: string, types: readonly Extensi
 
 	const extensionNames = Object.keys(pkg.dependencies ?? {}).filter((dep) => EXTENSION_NAME_REGEX.test(dep));
 
-	return listExtensionsChildren(extensionNames);
+	return listExtensionsChildren(extensionNames, root);
 
 	async function listExtensionsChildren(extensionNames: string[], root?: string) {
 		const extensions: Extension[] = [];
